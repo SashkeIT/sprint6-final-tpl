@@ -15,7 +15,6 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func HandleUpload(w http.ResponseWriter, r *http.Request) {
-
 	file, _, err := r.FormFile("File")
 	if err != nil {
 		message := fmt.Sprintf("File retrieval error: %v", err)

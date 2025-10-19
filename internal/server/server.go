@@ -49,3 +49,7 @@ func New(logger *log.Logger) *Server {
 		HTTP:   s,
 	}
 }
+func (s *Server) Start() error {
+	s.Logger.Println("Starting server on :8080")
+	return s.HTTP.ListenAndServe()
+}
