@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -15,7 +16,7 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func HandleUpload(w http.ResponseWriter, r *http.Request) {
-	file, _, err := r.FormFile("File")
+	file, _, err := r.FormFile("myFile")
 	if err != nil {
 		message := fmt.Sprintf("File retrieval error: %v", err)
 		http.Error(w, message, http.StatusInternalServerError)
@@ -45,7 +46,10 @@ func HandleUpload(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, message, http.StatusInternalServerError)
 	}
 
-	r.Header.Set("Content-Type", "text/html; charset=utf-8")
-	fmt.Fprint(w, encodedContent)
-
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	_, err = fmt.Fprint(w, encodedContent)
+	if err != nil {
+		log.Printf("Failed to write response: %v", err)
+		return
+	}
 }
