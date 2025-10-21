@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/Yandex-Practicum/go1fl-sprint6-final/internal/service"
@@ -31,7 +32,7 @@ func HandleUpload(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	content := string(data)
+	content := strings.TrimSpace(string(data))
 	encodedContent, err := service.ToggleMorse(content)
 	if err != nil {
 		message := fmt.Sprintf("Service conversion error: %v", err)
